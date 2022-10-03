@@ -2,8 +2,18 @@
 {
 	"Greet"
 	{
-		"#format" "{1:s},{2:s},{3:i},{4:i}"
-		"en" "\n[Electric] Welcome, {1}. You're playing {2}.\n - Soldier tier: {3}\n - Demoman tier: {4}\n"
-		"es" "\n[Electric] Bienvenido, {1}. Estás jugando {2}.\n - Soldier tier: {3}\n - Demoman tier: {4}\n"
+		"#format" "{1:s},{2:s},{3:s}"
+		"en" "{yellow}[Electric]{default} You're playing {lightblue}{1}{default}.\n - Soldier tier: {2}\n - Demoman tier: {3}\n"
+		"es" "[Electric]{default} Estás jugando {lightblue}{1}{default}.\n - Soldier tier: {2}\n - {yellow}Demoman tier:{default} {3}\n"
+	}
+	"Not defined"
+	{
+		"en" "{slategrey}Not defined{default}"
+		"es" "{slategrey}No definido{default}"
+	}
+	"No tiers found"
+	{
+		"en" "{yellow}[SM]{default} No tier info found for this map!"
+		"es" "{yellow}[SM]{default} No se encontró información de tiers para este mapa."
 	}
 }
