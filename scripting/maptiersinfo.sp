@@ -5,7 +5,7 @@
 #pragma semicolon 1
 #pragma newdecls required
 
-#define PLUGIN_VERSION "1.2"
+#define PLUGIN_VERSION "1.3"
 
 enum struct MapInfo {
   char Name[64];
@@ -73,7 +73,16 @@ public Action OnPIA(Event event, const char[] name, bool dontBroadcast) {
 }
 
 void GreetClient(int client) {
-  MC_PrintToChat(client, "%t", "Greet", g_CurrentMap.Name, g_CurrentMap.SoldierTier, g_CurrentMap.DemomanTier);
+	char msg[256];
+	Format(msg, sizeof(msg), "%t", "Greet", g_CurrentMap.Name, g_CurrentMap.SoldierTier, g_CurrentMap.DemomanTier);
+
+	if (client == 0) {
+		MC_RemoveTags(msg, sizeof(msg));
+		PrintToServer(msg);
+	}
+	else {
+  	MC_PrintToChat(client, msg);
+	}
 }
 void GetMapTiers() {
   char url[128];
