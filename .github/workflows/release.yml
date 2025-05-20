@@ -1,50 +1,55 @@
 name: Autobuild
-# modified from https://github.com/nosoop/NinjaBuild-SMPlugin/blob/master/contrib/github-workflow/build-on-version-tag-push.yml
-
 on:
   push:
     tags:
     - 'v*'
-
 jobs:
   run:
     name: Run action
     runs-on: ubuntu-latest
-
-    # skip build on '[ci skip]'
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
-
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout main repository
+      uses: actions/checkout@v4
       with:
+        path: main-repo
         submodules: true
-
+    
+    # Checkout your private scripting directory with dependencies
+    - name: Checkout scripting dependencies
+      uses: actions/checkout@v4
+      with:
+        repository: maxijabase/myScriptingDir
+        path: scripting-dir
+        token: ${{ secrets.PRIVATE_REPO_PAT }}
+    
+    # Setup compiler (you could potentially use the one from your repo instead)
     - name: Setup SourcePawn Compiler
       uses: rumblefrog/setup-sp@master
       with:
         version: "1.11.x"
-
+    
+    # Compile with your private include path
     - name: Compile plugins
       run: |
-        cd ./scripting
-        pwd
-        spcomp -i"./include/" maptiersinfo.sp -o ../plugins/maptiersinfo.smx
+        cd ./main-repo/scripting
+        # Compile using the include directory from your private repo
+        spcomp -i"../../scripting-dir/include/" maptiersinfo.sp -o ../plugins/maptiersinfo.smx
         ls -la
-
+    
+    # Continue with zip and release
     - name: Zip packages
       run: |
+        cd ./main-repo
         mkdir build
         7za a -r build/maptiersinfo.zip scripting/ plugins/ translations/
         ls -la
-        pwd
-
+    
     - name: Release
       uses: softprops/action-gh-release@v2
       if: startsWith(github.ref, 'refs/tags/')
       with:
         files: |
-          ./build/maptiersinfo.zip
+          ./main-repo/build/maptiersinfo.zip
         fail_on_unmatched_files: true
         generate_release_notes: true
-        # if: contains(github.ref, 'beta')
-        # prerelease: true
