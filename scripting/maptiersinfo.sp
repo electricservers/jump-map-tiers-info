@@ -5,7 +5,7 @@
 #pragma semicolon 1
 #pragma newdecls required
 
-#define PLUGIN_VERSION "1.3"
+#define PLUGIN_VERSION "1.4"
 
 enum struct MapInfo {
   char Name[64];
@@ -31,13 +31,17 @@ public void OnPluginStart() {
   LoadTranslations("maptiersinfo.phrases");
  
   g_TierColors = new StringMap();
+  g_TierColors.SetString("0", "{grey}");
   g_TierColors.SetString("1", "{limegreen}");
   g_TierColors.SetString("2", "{forestgreen}");
   g_TierColors.SetString("3", "{goldenrod}");
   g_TierColors.SetString("4", "{darkorange}");
   g_TierColors.SetString("5", "{orangered}");
   g_TierColors.SetString("6", "{fullred}");
-  g_TierColors.SetString("7", "{fullred}"); // Added for tier 7
+  g_TierColors.SetString("7", "{fullred}");
+  g_TierColors.SetString("8", "{purple}");
+  g_TierColors.SetString("9", "{darkviolet}");
+  g_TierColors.SetString("10", "{magenta}");
  
   RegConsoleCmd("sm_tier", CMD_GetTier);
 }
