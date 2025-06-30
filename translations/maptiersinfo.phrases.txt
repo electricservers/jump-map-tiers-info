@@ -16,4 +16,9 @@
 		"en" "{yellow}[SM]{default} No tier info found for this map!"
 		"es" "{yellow}[SM]{default} No se encontró información de tiers para este mapa."
 	}
+	"Unable to fetch mapinfo"
+	{
+		"en" "{yellow}[SM]{default} Unable to fetch mapinfo for {lightblue}{1}{default}!"
+		"es" "{yellow}[SM]{default} No se pudo obtener la información del mapa para {lightblue}{1}{default}!"
+	}
 }

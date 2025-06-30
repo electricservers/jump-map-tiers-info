@@ -48,6 +48,7 @@ public void OnPluginStart() {
 
 public void OnMapStart() {
   GetCurrentMap(g_CurrentMap.Name, sizeof(g_CurrentMap.Name));
+  g_CurrentMap.HasValidData = false;
   GetMapTiers();
 }
 
@@ -98,6 +99,7 @@ void GetMapTiers() {
 public void HTTP_OnMapInfoReceived(HTTPResponse res, any value) {
   if (res.Status != HTTPStatus_OK) {
     LogError("Unable to fetch mapinfo for %s", g_CurrentMap.Name);
+    PrintToChatAll("%t", "Unable to fetch mapinfo", g_CurrentMap.Name);
     return;
   }
  
